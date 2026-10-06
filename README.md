@@ -50,7 +50,7 @@ npm run build
 npx wrangler pages deploy dist --project-name content-payment-guide --branch main
 ```
 
-새 프로젝트는 `wrangler pages project create content-payment-guide --production-branch main`으로 만듭니다. 이번 배포는 Direct Upload이며 GitHub 자동 배포 연결은 설정하지 않았습니다. GitHub Actions는 검증만 수행합니다. 브랜치가 main이 아닌 미리보기는 반드시 `SITE_PREVIEW=true`로 빌드하고 업로드하세요. 인증 토큰은 저장소에 포함하지 않습니다.
+이번 프로젝트는 Direct Upload로 이미 생성되어 위 배포 명령을 사용하면 됩니다. Wrangler 4.148.0에서 에이전트가 새 Pages 프로젝트를 만들 때 Workers로 자동 전환되는 동작을 확인했습니다. 별도의 신규 Pages 프로젝트를 만들 경우에만 `pages project create <새 이름> --production-branch main --force`를 사용하고, 이미 생성된 프로젝트의 후속 배포에는 `--force`를 쓰지 않습니다. GitHub 자동 배포 연결은 설정하지 않았으며 GitHub Actions는 검증만 수행합니다. main 외 미리보기는 반드시 `SITE_PREVIEW=true`로 빌드하고 업로드하세요. 인증 토큰은 저장소에 포함하지 않습니다.
 
 ## 확인한 공식 자료 (2026-10-07)
 
