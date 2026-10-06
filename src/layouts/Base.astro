@@ -10,8 +10,9 @@ const canonical = new URL(Astro.url.pathname,origin).href;
 const preview = import.meta.env.SITE_PREVIEW === 'true' || (import.meta.env.CF_PAGES === '1' && import.meta.env.CF_PAGES_BRANCH !== 'main');
 const structured = [
  {'@context':'https://schema.org','@type':'WebSite','@id':new URL('/#website',origin).href,'name':site.name,'url':origin.href,'inLanguage':'ko-KR'},
+ {'@context':'https://schema.org','@type':Astro.url.pathname==='/about/'?'AboutPage':Astro.url.pathname==='/contact/'?'ContactPage':Astro.url.pathname.startsWith('/topics/')||Astro.url.pathname==='/articles/'?'CollectionPage':'WebPage','@id':canonical+'#webpage',url:canonical,name:title,description,inLanguage:'ko-KR',isPartOf:{'@id':new URL('/#website',origin).href}},
  ...(crumbs.length?[{'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{name:'홈',url:'/'},...crumbs].map((c,i)=>({'@type':'ListItem',position:i+1,name:c.name,item:new URL(c.url,origin).href}))}]:[]),
- ...(schema?[{'@context':'https://schema.org',...schema}]:[])
+ ...(schema?[{'@context':'https://schema.org','@id':canonical+'#article',...schema,mainEntityOfPage:{'@id':canonical+'#webpage'}}]:[])
 ];
 ---
 <!doctype html><html lang="ko"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><title>{title} | {site.name}</title><meta name="description" content={description}/><link rel="canonical" href={canonical}/><meta name="robots" content={noindex||preview?'noindex, follow':'index, follow'}/><meta name="theme-color" content="#153f38"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="alternate" type="application/rss+xml" title={`${site.name} RSS`} href="/rss.xml"/><meta property="og:type" content={schema?.['@type']==='Article'?'article':'website'}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:site_name" content={site.name}/><meta property="og:locale" content="ko_KR"/><script type="application/ld+json" set:html={JSON.stringify(structured).replace(/</g,'\\u003c')}/></head>

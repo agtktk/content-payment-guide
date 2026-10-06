@@ -18,7 +18,7 @@ for(const file of files){
  const canonical=$('link[rel="canonical"]').attr('href');assert(canonical&&new URL(canonical).origin===new URL(origin).origin,'Canonical: '+path);
  const expected=path==='404.html'?'/404/':path==='index.html'?'/':'/'+path.replace(/index\.html$/,'');assert.equal(new URL(canonical).pathname,expected);
  const noindex=$('meta[name="robots"]').attr('content')?.includes('noindex');assert.equal(noindex,preview||path==='search/index.html'||path==='404.html','Robots: '+path);
- $('script[type="application/ld+json"]').each((_,s)=>{for(const schema of JSON.parse($(s).html())){assert.notEqual(schema['@type'],'FAQPage');if(schema['@type']==='Article'){assert.equal(schema.dateModified.slice(0,10),$('.article-meta time').last().attr('datetime')||'2026-10-07');}}});
+ $('script[type="application/ld+json"]').each((_,s)=>{const schemas=JSON.parse($(s).html());assert(schemas.some(s=>['WebPage','CollectionPage','AboutPage','ContactPage'].includes(s['@type'])),'Page schema: '+path);for(const schema of schemas){assert.notEqual(schema['@type'],'FAQPage');if(schema['@type']==='Article'){assert.equal(schema.headline.replace(/\s/g,''),$('h1').text().replace(/\s/g,''),'Visible headline: '+path);assert.equal(schema.mainEntityOfPage['@id'],canonical+'#webpage');assert.equal(schema.dateModified.slice(0,10),$('.article-meta time').last().attr('datetime')||'2026-10-07');}}});
  for(const el of $('a[href]').toArray()){
   const href=$(el).attr('href');
   if(href.startsWith('tel:'))assert.equal(href,'tel:01081111555');
