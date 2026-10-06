@@ -41,7 +41,7 @@
 - 사이트맵 색인 대상 21개, RSS 상세 글 10개. 검색 결과와 404는 사이트맵에서 제외.
 - 초안·미래 발행 테스트 글은 페이지·검색·사이트맵·RSS 모두에서 제외.
 - Playwright: 390px와 1440px의 44개 경로·화면 조합 통과. 가로 넘침, 상담 링크·복사, 검색, FAQ, 200% 글자 확대, JavaScript 비활성화, 404 확인.
-- seo-audit.mjs: 정적 HTML이 브라우저에서 렌더링된 결과로 페이지별 메타와 구조화 데이터를 검사한다. 운영 배포 후 동일 검사로 재확인한다.
+- seo-audit.mjs: 정적 HTML이 브라우저에서 렌더링된 결과로 페이지별 메타와 구조화 데이터를 검사한다. 운영 배포 후 동일 검사로 21개 URL 모두 통과했다. 운영 주소의 44개 화면 점검도 통과했고, 배포 미리보기 주소의 X-Robots-Tag: noindex, follow를 확인했다.
 
 재실행: `npm run validate`, `npm run build`, `npm run qa`. 브라우저 검사 주소는 환경 변수 QA_URL로 지정한다. 운영 SEO 검사: `node scripts/seo-audit.mjs`.
 
