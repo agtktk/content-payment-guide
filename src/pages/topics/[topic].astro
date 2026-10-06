@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import {topics} from '../../data/site';
+import {publishedArticles} from '../../lib/content';
+export function getStaticPaths(){return topics.map(topic=>({params:{topic:topic.id},props:{topic}}));}
+const {topic}=Astro.props;
+const articles=(await publishedArticles()).filter(a=>a.data.topic===topic.id);
+---
+<Base title={`${topic.name} 가이드`} description={topic.description} crumbs={[{name:'주제별 보기',url:'/topics/'},{name:topic.name,url:`/topics/${topic.id}/`}]}><div class="page-intro"><p class="eyebrow">TOPIC {topic.number}</p><h1>{topic.name}</h1><p>{topic.description} 상황에 맞는 글에서 적용 범위와 공식 근거를 함께 확인하세요.</p></div><nav class="hub-nav" aria-label="다른 주제">{topics.map(t=><a href={`/topics/${t.id}/`} aria-current={t.id===topic.id?'page':undefined}>{t.name}</a>)}</nav><div class="articles-grid">{articles.map(article=><ArticleCard article={article}/>)}</div><p style="margin-top:2rem"><a href="/guide/">← 핵심 가이드로 돌아가기</a></p></Base>

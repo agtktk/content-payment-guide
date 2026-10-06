@@ -1,0 +1,5 @@
+---
+import Base from '../../layouts/Base.astro';
+import {topics} from '../../data/site';
+---
+<Base title="주제별 허브" description="콘텐츠 결제의 구조와 비용, Google Play, 환불과 문제 해결, 결제 보호 주제별 탐색." crumbs={[{name:'주제별 보기',url:'/topics/'}]}><div class="page-intro"><p class="eyebrow">EXPLORE BY TOPIC</p><h1>궁금한 주제에서 시작하세요</h1><p>청구와 거래를 구분한 뒤, 지금 겪는 상황에 맞는 확인 경로를 찾아보세요.</p></div><div class="route-grid">{topics.map(t=><a class="route-card" href={`/topics/${t.id}/`}><span class="num">{t.number}</span><h2>{t.name}</h2><p>{t.description}</p><span class="arrow" aria-hidden="true">↗</span></a>)}</div><p style="margin-top:2rem"><a href="/guide/">처음이라면 핵심 가이드부터 읽기 →</a></p></Base>

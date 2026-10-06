@@ -1,0 +1,8 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import {publishedArticles} from '../../lib/content';
+import {topics} from '../../data/site';
+const articles=await publishedArticles();
+---
+<Base title="전체 글" description="콘텐츠 결제 구조, Google Play, 환불과 계정 보호를 다루는 전체 가이드 목록." crumbs={[{name:'전체 글',url:'/articles/'}]}><div class="page-intro"><p class="eyebrow">ALL GUIDES</p><h1>질문마다, 하나의 가이드</h1><p>표현만 다른 글은 통합하고 서로 다른 결제 상황을 구분했습니다. 현재 공개된 글은 {articles.length}개입니다.</p></div><nav class="hub-nav" aria-label="목록 주제">{topics.map(t=><a href={`#${t.id}`}>{t.name}</a>)}</nav>{topics.map(t=><section id={t.id} class="article-list-section"><h2>{t.name}</h2><div class="articles-grid">{articles.filter(a=>a.data.topic===t.id).map(article=><ArticleCard article={article}/>)}</div></section>)}</Base>
