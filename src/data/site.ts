@@ -1,8 +1,8 @@
 export const site = {
-  name: '콘텐츠결제 길잡이',
+  name: '정보이용료현금화 컨텐츠이용료현금화 콘텐츠이용료현금화 정보실',
   description: '정보이용료현금화와 콘텐츠이용료현금화를 검색할 때 확인할 비용·결제 구조·위험, Google Play 환불과 계정 보호 안내.',
-  editor: '콘텐츠결제 길잡이 편집',
-  updatedAt: '2026-10-07',
+  editor: '정보실 편집',
+  updatedAt: '2026-10-08',
   contact: {
     name: '누티켓', phone: '010-8111-1555', kakaoId: 'N1348',
     kakaoUrl: 'https://qr.kakao.com/talk/MBsKvshDmtamG2EuQNKdmPuGFJQ-',

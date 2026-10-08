@@ -11,3 +11,7 @@
 @media(max-width:760px){.header-inner nav{flex-wrap:wrap;justify-content:flex-start;column-gap:1.3rem}.header-contact{display:block}.header-inner nav{order:1}.header-contact .button{font-size:.75rem;padding:.45rem .6rem;gap:.4rem}.header-inner{column-gap:.7rem}.brand{font-size:1.05rem}.brand small{font-size:.6rem}.header-inner nav a{white-space:normal}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 }
+
+/* Allow the full site name to wrap within the header and footer. */
+.brand{flex-shrink:1;min-width:0;max-width:360px}.brand>span:last-child{min-width:0;overflow-wrap:anywhere;word-break:keep-all}.brand-icon{flex-shrink:0}.footer-brand{overflow-wrap:anywhere;word-break:keep-all}
+
