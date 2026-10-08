@@ -16,3 +16,4 @@ export const topics = [
   {id:'safety', name:'결제 보호', number:'04', description:'알 수 없는 청구와 계정 노출에 대응합니다.'}
 ] as const;
 export const phoneHref = 'tel:' + site.contact.phone.replaceAll('-', '');
+export const informationFeeArticleIds = ['cashout-meaning','charge-categories','cashout-costs','counterparty-check','carrier-payment','billing-calendar','advance-fee','unknown-charges','purchase-versus-settlement','consultation-preparation'] as const;

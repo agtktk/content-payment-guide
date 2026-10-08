@@ -2,7 +2,7 @@
 import {render} from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ContactCard from '../../components/ContactCard.astro';
-import {site,topics} from '../../data/site';
+import {site,topics,informationFeeArticleIds} from '../../data/site';
 import {publishedArticles,articleUrl} from '../../lib/content';
 export async function getStaticPaths(){return (await publishedArticles()).map(article=>({params:{id:article.id},props:{article}}));}
 const {article}=Astro.props;
@@ -12,9 +12,10 @@ const topic=topics.find(t=>t.id===a.topic)!;
 const all=await publishedArticles();
 const related=a.related.map(id=>all.find(p=>p.id===id)).filter((p):p is NonNullable<typeof p>=>!!p);
 const url=new URL(articleUrl(article.id),Astro.site!).href;
+const isInformationFee=informationFeeArticleIds.some(id=>id===article.id);
 const schema={'@type':'Article',headline:a.title,description:a.description,inLanguage:'ko-KR',datePublished:a.publishedAt+'T00:00:00+09:00',dateModified:a.updatedAt+'T00:00:00+09:00',author:{'@type':'Organization',name:site.editor,url:new URL('/about/',Astro.site!).href},mainEntityOfPage:url};
 ---
 <Base title={a.title} description={a.description} schema={schema} crumbs={[{name:topic.name,url:`/topics/${topic.id}/`},{name:a.title,url:articleUrl(article.id)}]}>
- <header class="article-heading"><p class="eyebrow">{topic.name}</p><h1>{a.title}</h1><p class="description">{a.description}</p><div class="article-meta"><span>편집: {site.editor}</span><span>발행 <time datetime={a.publishedAt}>{a.publishedAt}</time></span><span>수정 <time datetime={a.updatedAt}>{a.updatedAt}</time></span></div></header>
+ <header class="article-heading"><p class="eyebrow">{topic.name}</p>{isInformationFee&&<p><a href="/information-fee/">정보이용료현금화 가이드 전체 보기</a></p>}<h1>{a.title}</h1><p class="description">{a.description}</p><div class="article-meta"><span>편집: {site.editor}</span><span>발행 <time datetime={a.publishedAt}>{a.publishedAt}</time></span><span>수정 <time datetime={a.updatedAt}>{a.updatedAt}</time></span></div></header>
  <div class="reading-grid"><nav class="toc" aria-label="글 목차"><strong>이 글에서 확인할 내용</strong><a href="#answer">핵심 답변</a><a href="#scope">적용 범위</a><a href="#body">개념·확인 절차</a><a href="#faq">관련 질문</a><a href="#sources">공식 근거</a><a href="#related">관련 글</a></nav><article class="reading"><section id="answer" class="answer-box"><p class="eyebrow">QUICK ANSWER</p><h2>핵심 답변</h2><p>{a.answer}</p></section><section id="scope" class="scope"><h2>적용 범위와 주의사항</h2><p>{a.scope}</p></section><section id="body"><Content/></section><section id="faq" class="faq"><h2>관련 질문과 답변</h2>{a.faq.map(f=><details><summary>{f.q}</summary><p>{f.a}</p></details>)}</section><section id="sources"><h2>공식 근거와 확인 경로</h2><p class="small">자료 확인일: <time datetime={a.checkedAt}>{a.checkedAt}</time>. 글 수정일과 별도로 기록하며, 정책은 원문에서 다시 확인하세요.</p><ul class="sources">{a.sources.map(s=><li><a href={s.url} target="_blank" rel="noopener noreferrer external">{s.name} ↗</a><small>{s.note}</small></li>)}</ul></section><section id="related"><h2>함께 확인할 글</h2><ul class="related-list">{related.map(r=><li><a href={articleUrl(r.id)}>{r.data.title} ↗</a></li>)}</ul><div class="back-links"><a href="/guide/">← 핵심 가이드</a><a href={`/topics/${topic.id}/`}>{topic.name} 허브</a><a href="/articles/">전체 글</a></div></section></article></div><ContactCard/>
 </Base>

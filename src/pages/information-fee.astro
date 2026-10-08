@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ContactCard from '../components/ContactCard.astro';
+import {informationFeeArticleIds} from '../data/site';
+import {publishedArticles} from '../lib/content';
+const all=await publishedArticles();
+const articles=informationFeeArticleIds.map(id=>all.find(a=>a.id===id)).filter((a):a is NonNullable<typeof a>=>!!a);
+---
+<Base title="정보이용료현금화 가이드: 뜻·수수료·한도·거래 확인" description="정보이용료현금화의 뜻부터 최종 수령액 계산, 한도와 결제 거절, 청구일, 거래 상대와 선입금 요구 확인까지 검색 상황별 글을 안내합니다." crumbs={[{name:'정보이용료현금화 가이드',url:'/information-fee/'}]}>
+ <div class="page-intro"><p class="eyebrow">INFORMATION FEE GUIDE</p><h1>정보이용료현금화 가이드</h1><p>정보이용료현금화를 검색할 때는 콘텐츠 주문, 청구 책임과 외부 상대의 지급 약속을 나누어 확인하세요. 결제 승인이 외부 지급을 보장하는 것은 아니며, 공식 환불과 별도 정산은 처리 주체가 다릅니다.</p></div>
+ <section aria-labelledby="start"><h2 id="start">현재 상황에 맞는 글부터 읽기</h2><ul class="related-list"><li>용어와 구조가 궁금하다면 <a href="/articles/cashout-meaning/">결제·거래·환불의 차이</a>부터 읽으세요.</li><li>견적을 비교하려면 <a href="/articles/cashout-costs/">최종 수령액과 차액 계산</a>을 확인하세요.</li><li>한도나 승인 문제가 있다면 <a href="/articles/carrier-payment/">회선 설정과 결제 거절 확인</a>으로 이동하세요.</li><li>상대와 조건을 확인하려면 <a href="/articles/counterparty-check/">거래 상대 확인</a>과 <a href="/articles/advance-fee/">추가 비용 요구 확인</a>을 함께 읽으세요.</li></ul><p>컨텐츠·콘텐츠의 철자 변형은 같은 의미로 다룹니다. 가상 계산과 편집부 서식은 실제 견적이나 업체 인증이 아니며, 공식 자료는 해당 플랫폼 기능의 확인 근거입니다.</p></section>
+ <section class="section" aria-labelledby="series"><h2 id="series">정보이용료현금화 상황별 글 {articles.length}편</h2><div class="articles-grid">{articles.map((article,index)=><ArticleCard article={article} index={index}/>)}</div></section>
+ <p><a href="/guide/">핵심 가이드의 전체 확인 순서</a> · <a href="/topics/">다른 결제 주제 보기</a> · <a href="/about/">출처와 편집 원칙</a></p><ContactCard/>
+</Base>
