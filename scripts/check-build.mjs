@@ -38,4 +38,6 @@ for(const p of ['/search/','/404/'])assert(!sitemap('loc').toArray().some(e=>sit
 assert(readFileSync('dist/robots.txt','utf8').includes(origin+'/sitemap.xml'));
 const headers=`/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n/search/*\n  X-Robots-Tag: noindex, follow\n/404.html\n  X-Robots-Tag: noindex, follow\nhttps://:preview.content-payment-guide.pages.dev/*\n  X-Robots-Tag: noindex, follow\n${preview?'/*\n  X-Robots-Tag: noindex, follow\n':''}`;
 writeFileSync('dist/_headers',headers);
+// Offer the index-style submission URL as well as the existing sitemap.xml.
+writeFileSync('dist/sitemap-index.xml',`<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>${new URL('/sitemap.xml',origin).href}</loc></sitemap></sitemapindex>`);
 console.log(`PASS: ${files.length} HTML pages, ${links} internal links/anchors, unique metadata, canonicals, H1, JSON-LD, ${visible.length} RSS items, sitemap lastmod, publication exclusions & preview headers.`);
