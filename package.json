@@ -8,7 +8,8 @@
     "validate": "astro check && node scripts/validate.mjs",
     "build": "astro build && node scripts/check-build.mjs",
     "preview": "astro preview --host 127.0.0.1",
-    "qa": "node scripts/browser-qa.mjs"
+    "qa": "node scripts/browser-qa.mjs",
+    "audit:lighthouse": "node scripts/lighthouse.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "8.0.3",
